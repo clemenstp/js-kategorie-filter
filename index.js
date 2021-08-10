@@ -45,16 +45,20 @@ function applyFilter() {
   var grauweissActive;
 
   // Filter Buttons
-  m4 = document.getElementById('4m');
-  m4Active = document.getElementById('4m_active');
-  m8 = document.getElementById('8m');
-  m8Active = document.getElementById('8m_active');
-  m4x8 = document.getElementById('4x8m');
-  m4x8Active = document.getElementById('4x8m_active');
-  grauweiss = document.getElementById('grauweiss');
-  grauweissActive = document.getElementById('grauweiss_active');
+  var m4 = document.getElementById('4m');
+  var m4Active = document.getElementById('4m_active');
+  var m8 = document.getElementById('8m');
+  var m8Active = document.getElementById('8m_active');
+  var m4x8 = document.getElementById('4x8m');
+  var m4x8Active = document.getElementById('4x8m_active');
+  var grauweiss = document.getElementById('grauweiss');
+  var grauweissActive = document.getElementById('grauweiss_active');
 
   // listen
+  var listeIntial = document.getElementById('liste_inital');
+  var listeFarbe = document.getElementById('liste_farbe');
+  var listeGroesse = document.getElementById('liste_groesse');
+  var listeGefiltert = document.getElementById('liste_gefiltert');
 
   if (
     (window.getComputedStyle(m4Active).display === 'flex' &&
@@ -69,6 +73,6 @@ function applyFilter() {
   } else if (window.getComputedStyle(grauweissActive).display === 'flex') {
     console.log('filter farbe alleine active!');
   }
- 
+
   //console.log('applyFilter end');
 }
