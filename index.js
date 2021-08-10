@@ -51,16 +51,16 @@ function applyFilter() {
   var listeActive;
 
   // angezeigte Liste feststellen
-  if (listeIntial.window.getComputedStyle.display === 'block') {
+  if (window.getComputedStyle(listeIntial).display === 'block') {
     listeActive = listeIntial;
     console.log('Aktive Liste: Initial');
-  } else if (listeFarbe.window.getComputedStyle.display === 'block') {
+  } else if (window.getComputedStyle(listeFarbe).display === 'block') {
     listeActive = listeFarbe;
     console.log('Aktive Liste: Farbe');
-  } else if (listeGroesse.window.getComputedStyle.display === 'block') {
+  } else if (window.getComputedStyle(listeGroesse).display === 'block') {
     listeActive = listeGroesse;
     console.log('Aktive Liste: Größe');
-  } else if (listeGroesseFarbe.window.getComputedStyle.display === 'block') {
+  } else if (window.getComputedStyle(listeGroesseFarbe).display === 'block') {
     listeActive = listeGroesseFarbe;
     onsole.log('Aktive Liste: Größe & Farbe');
   }
@@ -85,14 +85,15 @@ function applyFilter() {
     if (listeIntial === listeActive) {
       listeIntial.window.style.display;
     } else if (liste.listeFarbe.window.getComputedStyle.display === 'block') {
-      listeActive= listeFarbe;
+      listeActive = listeFarbe;
     } else if (liste.listeGroesse.window.getComputedStyle.display === 'block') {
-      listeActive= listeGroesse;
-    } else if (liste.listeGroesseFarbe.window.getComputedStyle.display === 'block') {
-      listeActive= listeGroesseFarbe;
+      listeActive = listeGroesse;
+    } else if (
+      liste.listeGroesseFarbe.window.getComputedStyle.display === 'block'
+    ) {
+      listeActive = listeGroesseFarbe;
     }
   }, 160);
-
 
   //console.log('applyFilter end');
 }
