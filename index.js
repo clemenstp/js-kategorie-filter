@@ -42,8 +42,8 @@ function applyFilter() {
   var grauweissActive = document.getElementById('grauweiss_active');
 
   // Listen
-  var listeIntial = document.getElementById('liste_inital');
-  var listeFarbe = document.getElementById('liste_farbe');
+  var listeIntial = document.getElementById('liste-initial');
+  var listeFarbe = document.getElementById('liste-farbe');
   var listeGroesse = document.getElementById('liste_groesse');
   var listeGroesseFarbe = document.getElementById('liste-groesse-farbe');
 
@@ -51,6 +51,7 @@ function applyFilter() {
   var listeActive;
 
   // angezeigte Liste feststellen
+
   if (window.getComputedStyle(listeIntial).display === 'block') {
     listeActive = listeIntial;
     console.log('Aktive Liste: Initial');
@@ -81,6 +82,7 @@ function applyFilter() {
   }
 
   // Anzeige aktualisieren mit Delay (nach Webflow Animation)
+  /*
   setTimout(function setFilter(listeActive) {
     if (listeIntial === listeActive) {
       listeIntial.window.style.display;
@@ -94,6 +96,7 @@ function applyFilter() {
       listeActive = listeGroesseFarbe;
     }
   }, 160);
+  */
 
   //console.log('applyFilter end');
 }
