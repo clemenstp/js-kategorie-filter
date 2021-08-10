@@ -69,6 +69,6 @@ function applyFilter() {
   } else if (window.getComputedStyle(grauweissActive).display === 'flex') {
     console.log('filter farbe alleine active!');
   }
-
+ 
   //console.log('applyFilter end');
 }
