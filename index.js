@@ -1,36 +1,67 @@
+// Listen
+var listeInitial = document.getElementById('liste-initial');
+var listeFarbe = document.getElementById('liste-farbe');
+var listeGroesse = document.getElementById('liste-groesse');
+var listeGroesseFarbe = document.getElementById('liste-groesse-farbe');
+
+// gesetzte Filter Buttons
 var btnFarbe = document.getElementById('filter_farbe');
 var btnGroesse = document.getElementById('filter_groesse');
+
+// Filter anwenden Button
 var btnApply = document.getElementById('filter_apply');
-var btnFilterBar = document.getElementById('filter_bar');
 
-btnFarbe.addEventListener('click', clearFilter);
-btnGroesse.addEventListener('click', clearFilter);
+// Gesetzte Filter löschen - Klick Events
+btnFarbe.addEventListener('click', clearFilterFarbe);
+btnGroesse.addEventListener('click', clearFilterGroesse);
+
+// Filter anwenden - Klick Event
 //btnApply.addEventListener('click', applyFilter);
-btnFilterBar.addEventListener('click', applyFilter);
+btnApply.addEventListener('click', applyFilter);
 
-function clearFilter() {
-  console.log('clearFilter start');
+// Liste zurücksetzen, wenn gesetzte Filter gelöscht werden
+// Farbe
+function clearFilterFarbe() {
+  console.log('clearFilterFarbe start');
 
-  var farbe;
-  var groesse;
+  // Alle Listen mit Farbe zurücksetzen
+  listeFarbe.style.display = 'none';
+  listeGroesseFarbe.style.display = 'none';
 
-  farbe = document.getElementById('filter_farbe');
-  groesse = document.getElementById('filter_groesse');
-
-  if (
-    window.getComputedStyle(groesse).display === 'none' &&
-    window.getComputedStyle(farbe).display === 'none'
-  ) {
-    console.log('clearFilter if');
-
-    document.getElementById('liste_inital').style.display = 'block';
-    document.getElementById('liste_groesse').style.display = 'none';
-    document.getElementById('liste_farbe').style.display = 'none';
-    document.getElementById('liste_gefiltert').style.display = 'none';
+  // Wenn Größe gefiltert... sonst ungefilterte Liste anzeigen
+  if (window.getComputedStyle(btnGroesse).display === 'flex') {
+    listeGroesse.style.display = 'block';
+  } else {
+    listeInitial.style.display = 'block';
   }
 
-  console.log('clearFilter end');
+  console.log('clearFilterFarbe end');
 }
+
+// Größe
+function clearFilterGroesse() {
+  console.log('clearFilterGroesse start');
+
+  // Alle Listen mit Farbe zurücksetzen
+  listeGroesse.style.display = 'none';
+  listeGroesseFarbe.style.display = 'none';
+
+  // Wenn Größe gefiltert... sonst ungefilterte Liste anzeigen
+  if (window.getComputedStyle(btnFarbe).display === 'flex') {
+    listeFarbe.style.display = 'block';
+  } else {
+    listeInitial.style.display = 'block';
+  }
+
+  console.log('clearFilterGroesse end');
+}
+
+/* 
+Filter anwenden
+- aktive Liste feststellen
+- gesetzte Filter feststellen 
+- aktive Liste & gesetzte Filter aktualisieren 
+*/
 
 function applyFilter() {
   //console.log('apllyFilter start');
@@ -41,19 +72,13 @@ function applyFilter() {
   var m4x8Active = document.getElementById('4x8m_active');
   var grauweissActive = document.getElementById('grauweiss_active');
 
-  // Listen
-  var listeIntial = document.getElementById('liste-initial');
-  var listeFarbe = document.getElementById('liste-farbe');
-  var listeGroesse = document.getElementById('liste_groesse');
-  var listeGroesseFarbe = document.getElementById('liste-groesse-farbe');
-
   // Hilfsvariablen
   var listeActive;
+  var listeSet;
 
   // angezeigte Liste feststellen
-
-  if (window.getComputedStyle(listeIntial).display === 'block') {
-    listeActive = listeIntial;
+  if (window.getComputedStyle(listeInitial).display === 'block') {
+    listeActive = listeInitial;
     console.log('Aktive Liste: Initial');
   } else if (window.getComputedStyle(listeFarbe).display === 'block') {
     listeActive = listeFarbe;
@@ -63,10 +88,10 @@ function applyFilter() {
     console.log('Aktive Liste: Größe');
   } else if (window.getComputedStyle(listeGroesseFarbe).display === 'block') {
     listeActive = listeGroesseFarbe;
-    onsole.log('Aktive Liste: Größe & Farbe');
+    console.log('Aktive Liste: Größe & Farbe');
   }
 
-  // gesetzte Filter feststellen & aktive Liste aktualisieren
+  // gesetzte Filter feststellen
   if (
     (window.getComputedStyle(m4Active).display === 'flex' &&
       window.getComputedStyle(m8Active).display === 'flex') ||
@@ -74,29 +99,72 @@ function applyFilter() {
   ) {
     if (window.getComputedStyle(grauweissActive).display === 'flex') {
       console.log('Aktive Filter: Größe & Farbe');
+      listeSet = listeGroesseFarbe;
     } else {
       console.log('Aktive Filter: Größe alleine');
+      listeSet = listeGroesse;
     }
   } else if (window.getComputedStyle(grauweissActive).display === 'flex') {
     console.log('Aktive Filter: Farbe alleine');
+    listeSet = listeFarbe;
   }
 
-  // Anzeige aktualisieren mit Delay (nach Webflow Animation)
-  /*
-  setTimout(function setFilter(listeActive) {
-    if (listeIntial === listeActive) {
-      listeIntial.window.style.display;
-    } else if (liste.listeFarbe.window.getComputedStyle.display === 'block') {
-      listeActive = listeFarbe;
-    } else if (liste.listeGroesse.window.getComputedStyle.display === 'block') {
-      listeActive = listeGroesse;
-    } else if (
-      liste.listeGroesseFarbe.window.getComputedStyle.display === 'block'
-    ) {
-      listeActive = listeGroesseFarbe;
-    }
-  }, 160);
-  */
+  if (listeSet != listeActive) {
+    setTimeout(function() {
+      setFilter(listeSet);
+    }, 1600);
+  } else {
+    console.log('Keine Filterung');
+  }
+}
 
-  //console.log('applyFilter end');
+// aktive Liste & gesetzte Filter aktualisieren (mit Delay nach Webflow Animation)
+function setFilter(listeSet) {
+  console.log('setFilter start');
+
+  if (listeSet == listeInitial) {
+    console.log('listeInitial setzen');
+    // Listen anzeigen / verstecken
+    listeInitial.style.display = 'block';
+    listeFarbe.style.display = 'none';
+    listeGroesse.style.display = 'none';
+    listeGroesseFarbe.style.display = 'none';
+
+    // gsetzte Filter Buttons anzeigen / verstecken
+    btnFarbe.style.display = 'none';
+    btnGroesse.style.display = 'none';
+  } else if (listeSet == listeFarbe) {
+    console.log('listeFarbe setzen');
+    // Listen anzeigen / Vvrstecken
+    listeInitial.style.display = 'none';
+    listeFarbe.style.display = 'block';
+    listeGroesse.style.display = 'none';
+    listeGroesseFarbe.style.display = 'none';
+
+    // gsetzte Filter Buttons anzeigen / verstecken
+    btnFarbe.style.display = 'flex';
+    btnGroesse.style.display = 'none';
+  } else if (listeSet == listeGroesse) {
+    console.log('listeGroesse setzen');
+    // Listen anzeigen / verstecken
+    listeInitial.style.display = 'none';
+    listeFarbe.style.display = 'none';
+    listeGroesse.style.display = 'block';
+    listeGroesseFarbe.style.display = 'none';
+
+    // gsetzte Filter Buttons anzeigen / verstecken
+    btnFarbe.style.display = 'none';
+    btnGroesse.style.display = 'flex';
+  } else if (listeSet == listeGroesseFarbe) {
+    console.log('listeGroesseFarbe setzen');
+    // Listen anzeigen / verstecken
+    listeInitial.style.display = 'none';
+    listeFarbe.style.display = 'none';
+    listeGroesse.style.display = 'none';
+    listeGroesseFarbe.style.display = 'block';
+
+    // gsetzte Filter Buttons anzeigen / verstecken
+    btnFarbe.style.display = 'flex';
+    btnGroesse.style.display = 'flex';
+  }
 }
