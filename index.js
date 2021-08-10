@@ -35,44 +35,64 @@ function clearFilter() {
 function applyFilter() {
   //console.log('apllyFilter start');
 
-  var m4;
-  var m4Active;
-  var m8;
-  var m8Active;
-  var m4x8;
-  var m4x8Active;
-  var grauweiss;
-  var grauweissActive;
-
   // Filter Buttons
-  var m4 = document.getElementById('4m');
   var m4Active = document.getElementById('4m_active');
-  var m8 = document.getElementById('8m');
   var m8Active = document.getElementById('8m_active');
-  var m4x8 = document.getElementById('4x8m');
   var m4x8Active = document.getElementById('4x8m_active');
-  var grauweiss = document.getElementById('grauweiss');
   var grauweissActive = document.getElementById('grauweiss_active');
 
-  // listen
+  // Listen
   var listeIntial = document.getElementById('liste_inital');
   var listeFarbe = document.getElementById('liste_farbe');
   var listeGroesse = document.getElementById('liste_groesse');
-  var listeGefiltert = document.getElementById('liste_gefiltert');
+  var listeGroesseFarbe = document.getElementById('liste-groesse-farbe');
 
+  // Hilfsvariablen
+  var listeActive;
+
+  // angezeigte Liste feststellen
+  if (listeIntial.window.getComputedStyle.display === 'block') {
+    listeActive = listeIntial;
+    console.log('Aktive Liste: Initial');
+  } else if (listeFarbe.window.getComputedStyle.display === 'block') {
+    listeActive = listeFarbe;
+    console.log('Aktive Liste: Farbe');
+  } else if (listeGroesse.window.getComputedStyle.display === 'block') {
+    listeActive = listeGroesse;
+    console.log('Aktive Liste: Größe');
+  } else if (listeGroesseFarbe.window.getComputedStyle.display === 'block') {
+    listeActive = listeGroesseFarbe;
+    onsole.log('Aktive Liste: Größe & Farbe');
+  }
+
+  // gesetzte Filter feststellen & aktive Liste aktualisieren
   if (
     (window.getComputedStyle(m4Active).display === 'flex' &&
       window.getComputedStyle(m8Active).display === 'flex') ||
     window.getComputedStyle(m4x8Active).display === 'flex'
   ) {
     if (window.getComputedStyle(grauweissActive).display === 'flex') {
-      console.log('filter größe & farbe active!');
+      console.log('Aktive Filter: Größe & Farbe');
     } else {
-      console.log('filter größe alleine active!');
+      console.log('Aktive Filter: Größe alleine');
     }
   } else if (window.getComputedStyle(grauweissActive).display === 'flex') {
-    console.log('filter farbe alleine active!');
+    console.log('Aktive Filter: Farbe alleine');
   }
+
+  // Anzeige aktualisieren mit Delay (nach Webflow Animation)
+  setTimout(function setFilter(listeActive) {
+    if (listeIntial === listeActive) {
+      listeIntial.window.style.display;
+    } else if (liste.listeFarbe.window.getComputedStyle.display === 'block') {
+      listeActive= listeFarbe;
+    } else if (liste.listeGroesse.window.getComputedStyle.display === 'block') {
+      listeActive= listeGroesse;
+    } else if (liste.listeGroesseFarbe.window.getComputedStyle.display === 'block') {
+      listeActive= listeGroesseFarbe;
+    }
+  }, 160);
+
 
   //console.log('applyFilter end');
 }
